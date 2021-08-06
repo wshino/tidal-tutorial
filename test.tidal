@@ -1,0 +1,135 @@
+d1 $ s "bd ~ bd ~"
+d2 $ s "[~ hh]*2"
+d3 $ s "numbers:1"
+d4 $ s "cp cp cp cp"
+p 1234 $ s "bd bd"
+
+p 4321 $ s "hh hh"
+
+p "romeo" $ s "bd bd"
+
+p "juliet" $ s "hh*4"
+once $ s "trump"
+p "loudpattern" $ silence
+d1 $ sound "drum" |+| n "1 2 3"
+d1 $ sound "drum" |+| n "2 3" |+| n "4 5 6"
+d1 $ s "[bd sd] hh"
+d1 $ s "bd sd hh"
+d1 $ s "bd sd . hh hh hh"
+d1 $ s "[bd sd, hh hh hh]"
+d1 $ s "bd*2 sd"
+d1 $ s "bd/2"
+d1 $ s "[bd |cp |hh]"
+d4 $ s "sd sd sd sd" $ silence
+d1 $ s "bd <sd hh cp>"
+d2 $ s "bd _ _ hh*4"
+p "scroll" $ s "arpy:1 arpy:2 arpy:3 arpy:4 arpy:5"
+p "scroll" $  s "[bd*4, [arpy:1,arpy:2,arpy:3,arpy:4,arpy:5](5,8)]"
+d1 $ s "bd(3,8)"
+d1 $ s "[bd(3,8), cp(2,8), hh(7,8), bass:1(7,16)]"
+d1 $ s "[bd(5,8), cp(4,8), hh(7,8), bass:1(7,16)]"
+
+d1 $ s "[bd(2,5)]"
+d1 $ s "[bd(3,4)]"
+d1 $ s "[bd(3,5,2)]"
+d1 $ s "[bd(5,6)]"
+
+d1 $ s "[bd(4,11)]" 
+
+d1 $ s "{bd*2, hh*4, bd hh 808:4}"
+
+
+d1 $ s "{bd hh 808:4}%8"
+d2 $ s "{bd cp 808:5}%4" # speed 2 $ silence
+hush
+d1 $ sound "bd*8" # pan sine # speed (sine + 0.5)
+d1 $ sound "bd*8" # pan cosine # speed (sine + 0.5)
+d1 $ sound "bd*8" # pan (cat [square, sine])
+d1 $ sound "bd*16" # speed (slow 2 $ range 0.5 2 tri)
+d1 $ sound "bd*8" # pan (slow 2 saw)
+d1 $ sound "bd*8" # pan (slow 2 isaw)
+d1 $ sound "bd*8" # pan rand
+d1 $ sound "drum*8" # n (irand 8)
+d1 $ s "bass:5*8" # lpf (range 200 5000 $ sine) 
+d1 $ s "bass:5*8" # lpf (slow 4 $ range 200 5000 $ sine) 
+
+d1 $ n (slow 2 $ fmap (*7) $ run 8) 
+  # s "supergong" 
+  # decay "[1 0.2]/4"
+
+d1 $ s "supertron" 
+  # octave 3 
+  # accelerate "0.2" 
+
+d1 $ note "c d e f g a"
+   # sound "<superpiano supersquare supersaw>"
+
+d1 $ s "bd hh bd hh*2"
+  # lpf "500 1000 1500"
+  # lpq 0.5
+
+d1 $ note "c d e f g a"
+   # sound "<superpiano supersquare supersaw>"
+   # lpf "500 1000 1500"
+   # lpq 0.5
+
+p "cpsfun" $ s "bd sd(3,8)" # cps (slow 8 $ 0.5 + saw)
+
+d1 $ s "bd(3,8) drum*4"
+xfade 1 $ s "arpy*8" # n (run 8)
+
+d3 $ s "bd(3,8)"
+xfade 3 $ s "arpy*4"
+
+p "drums" $ s "bd(3,8) drum*4"
+xfade "drums" $ s "arpy*8" # n (run 8)
+
+xfadeIn 1 8 $ s "arpy*8" # n (run 8)
+
+d1 $ slow 2 $ sound "alphabet(5,8)" # n "0 .. 4"
+
+d1 $ sound "alphabet(5,8)" # nTake "susan" [0 .. 4]
+d1 $ sound "alphabet(5,8)" # nTake "susan" [7]
+d1 $ sound "alphabet(5,8)" # nTake "susan" [0 ..]
+d1 $ sound "alphabet(5,8)" # nCount "harold"
+setF "harold" 0
+d2 $ sound "newnotes*16" # n "^harold" # gain 1
+
+d1 $ struct "t(7,12,3)" $
+  sound "gretsch"
+  # nCountTo "rachael" 5
+
+d1 $ struct "t(7,12,3)" $
+  sound "gretsch"
+  # nCountTo "rachael" "<4 8>"
+
+d1 $ sound "newnotes(5,8)" # nCount "harold"
+d1 $ rev $ sound "newnotes(5,8)" # nCount "harold"
+
+d1 $ n "c'maj e'min" # s "supermandolin"
+d2 $ n ("c e f" |+ "<'maj 'min>") # s "supermandolin"
+d3 $ n("c4'maj c5'maj c6'maj") # s "supermandolin"
+
+d1 $ s "bd*4" # nudge 0.9
+d2 $ fast 2 $ s "~ sn" # nudge 0.4
+all $ (|+ nudge 0.2)
+
+d2 $ sound "bd hh hh hh"
+d2 $ qtrigger 2 $ sound "bd hh hh hh"
+d2 $ trigger 2 $ sound "bd hh hh hh"
+
+do 
+  resetCycles
+  d1 $ s "bd*4"
+  d2 $ s "~ hh ~ hh*2"
+
+d1 $ juxBy 0.4 rev $ every 2 (rot "<1 3 2>") $ n "0 <0 4> [2 0] [2 3]" # sound "feel" # speed "1.75 2"
+
+
+d1 $ off 0.25 (# vowel "<a o i>")
+  $ juxBy 0.4 rev $ every 2 (rot "<1 3 2>") $ n "0 <0 4> [2 0] [2 3]" # sound "feel" # speed "1.75 2"
+
+
+d2 $ juxBy 0.5 rev $ chunk 4 ((+ speed (1 + sine)) . ply 8) $ note "3(3,8)" # sound "bass"
+  # speed "<2 4>"
+  # legato 1 
